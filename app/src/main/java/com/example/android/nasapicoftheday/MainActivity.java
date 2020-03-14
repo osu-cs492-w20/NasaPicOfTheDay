@@ -1,5 +1,6 @@
 package com.example.android.nasapicoftheday;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -52,9 +53,6 @@ public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicI
 
         doPicSearch();
 
-
-
-
     }
 
     public void doPicSearch() {
@@ -62,10 +60,13 @@ public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicI
         new PicSearchTask().execute(url);
     }
 
-
     @Override
-    public void onPicItemClick(PicList forecast) {
-
+    public void onPicItemClick(PicList pic) {
+        Intent picActivityDetailIntent = new Intent(this, PicDetailActivity.class);
+        picActivityDetailIntent.putExtra(
+                PicDetailActivity.EXTRA_PIC_ACTIVITY,
+                pic);
+        startActivity(picActivityDetailIntent);
     }
 
     public class PicSearchTask extends AsyncTask<String, Void, String> {
