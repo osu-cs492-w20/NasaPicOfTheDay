@@ -2,6 +2,9 @@ package com.example.android.nasapicoftheday;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.media.Image;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.nasapicoftheday.utils.PicList;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -56,11 +60,14 @@ public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicItemViewHolde
 
     class PicItemViewHolder extends RecyclerView.ViewHolder {
         private TextView mPicTextView;
+        private ImageView mImageView;
 
 
         public PicItemViewHolder(@NonNull View itemView) {
             super(itemView);
             mPicTextView = itemView.findViewById(R.id.tv_title_text);
+            mImageView = itemView.findViewById(R.id.imageview);
+
 
 //            itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -73,6 +80,7 @@ public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicItemViewHolde
 
         public void bind(PicList pic) {
             mPicTextView.setText(pic.title);
+            Picasso.get().load(pic.url).into(mImageView);
         }
     }
 }
