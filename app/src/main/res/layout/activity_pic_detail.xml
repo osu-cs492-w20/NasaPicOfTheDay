@@ -7,20 +7,24 @@
     android:orientation="vertical"
     tools:context=".PicDetailActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_add_black_24dp" />
+    </LinearLayout>
+
     <TextView
+        android:scrollbars = "vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:textSize="22sp"/>
-
-
-    <ImageView
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@drawable/ic_add_black_24dp" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:textSize="22sp"
         android:id="@+id/tv_pic_description"/>
 
 </LinearLayout>
