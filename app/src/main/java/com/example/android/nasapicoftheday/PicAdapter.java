@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.nasapicoftheday.utils.PicList;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicItemViewHolder> {
 
     //    private ArrayList<String> mForecastData;
-    private ArrayList<PicList> mPicData;
+    private ArrayList<PicList> mPicData = new ArrayList<PicList>();
     private PicList mPic;
     private OnPicItemClickListener mOnPicItemClickListener;
 
@@ -55,6 +56,7 @@ public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicItemViewHolde
 
     class PicItemViewHolder extends RecyclerView.ViewHolder {
         private TextView mPicTextView;
+
 
         public PicItemViewHolder(@NonNull View itemView) {
             super(itemView);
