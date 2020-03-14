@@ -1,6 +1,7 @@
 package com.example.android.nasapicoftheday.utils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class PicList implements Serializable {
     public String date;
