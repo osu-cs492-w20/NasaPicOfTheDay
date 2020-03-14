@@ -2,4 +2,7 @@
     <string name="app_name">NASAPicOfTheDay</string>
     <string name="title_home">Home</string>
     <string name="title_saved">Saved Images</string>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
 </resources>

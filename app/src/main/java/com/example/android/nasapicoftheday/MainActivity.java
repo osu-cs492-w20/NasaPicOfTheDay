@@ -2,6 +2,7 @@ package com.example.android.nasapicoftheday;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.View;
 
 import com.example.android.nasapicoftheday.utils.NetworkUtils;
@@ -19,14 +20,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicItemClickListener {
 
     private RecyclerView mPicListRV;
     private PicAdapter mPicAdapter;
+    private String date;
+    public static final String DATE_FORMAT_3 = "yyyy-MM-dd";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +55,110 @@ public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicI
         mPicAdapter = new PicAdapter(this);
         mPicListRV.setAdapter(mPicAdapter);
 
+        String date = getCurrentDate();
+
+        doPicSearch(date);
+        date = getpreviousDate(date);
+        doPicSearch(date);
+        date = getpreviousDate(date);
+        doPicSearch(date);
+        date = getpreviousDate(date);
+        doPicSearch(date);
+        date = getpreviousDate(date);
+        doPicSearch(date);
+        date = getpreviousDate(date);
+        doPicSearch(date);
+        date = getpreviousDate(date);
+        doPicSearch(date);
+        date = getpreviousDate(date);
+        doPicSearch(date);
+        date = getpreviousDate(date);
 
 
-        doPicSearch();
+        
+
+
+
+
 
 
 
 
     }
 
-    public void doPicSearch() {
-        String url = PicOfDayUtils.buildPicSearchURL("2020-03-14");
+    public String getpreviousDate (String date) {
+        char c = date.charAt(9);
+        char d = date.charAt(8);
+        char m1 = date.charAt(5);
+        char m2 = date.charAt(6);
+        int flag = 0;
+        if (d == 48 && c == 49) {
+            if (m2 == 48) {
+                m1 = 48;
+                m2 = 57;
+            }
+            else {
+                m2 = (char)(m2-1);
+            }
+            date = date.substring(0, 5)
+                    + m1
+                    + date.substring(6);
+            date = date.substring(0, 6)
+                    + m2
+                    + date.substring(7);
+//            System.out.println("date3: " + date);
+        }
+        if (c == 49 && d == 48) {
+            System.out.println("here");
+            c = 48;
+            d = 51;
+            flag = 1;
+            date = date.substring(0, 8)
+                    + d
+                    + date.substring(9);
+            date = date.substring(0, 9)
+                    + c
+                    + date.substring(10);
+        }
+        else if (c == 48 && flag == 0) {
+            if (d == 51) {
+                d = 50;
+            }
+            else if (d == 50) {
+                d = 49;
+            }
+            else if (d == 49) {
+                d = 48;
+            }
+            date = date.substring(0, 8)
+                    + d
+                    + date.substring(9);
+            date = date.substring(0, 9)
+                    + '9'
+                    + date.substring(10);
+//            System.out.println("date1: " + date);
+        }
+        else {
+            c = (char) (c-1);
+            date = date.substring(0, 9)
+                    + c
+                    + date.substring(10);
+//            System.out.println("date2: " + date);
+        }
+        System.out.println("final date: " + date);
+        return date;
+    }
+
+    public static String getCurrentDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_3);
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date today = Calendar.getInstance().getTime();
+        return dateFormat.format(today);
+
+    }
+
+    public void doPicSearch(String date) {
+        String url = PicOfDayUtils.buildPicSearchURL(date);
         new PicSearchTask().execute(url);
     }
 
