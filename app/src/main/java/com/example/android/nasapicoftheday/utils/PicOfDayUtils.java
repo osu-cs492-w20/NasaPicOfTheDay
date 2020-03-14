@@ -12,9 +12,6 @@ public class PicOfDayUtils {
     private final static String PIC_SEARCH_KEY_PARAM = "api_key";
     private final static String PIC_SEARCH_KEY_VALUE = "OtajrOetTdMjKd88Y81ishNQKAfmsv0Cv5jNYM5z";
 
-//    static class PicSearchResults { //represent top level JSON search results
-//        ArrayList<PicList> list;
-//    }
 
     public static String buildPicSearchURL (String date) {  //pass in query and spit out url to use to query
         return Uri.parse(PIC_SEARCH_BASE_URL).buildUpon()

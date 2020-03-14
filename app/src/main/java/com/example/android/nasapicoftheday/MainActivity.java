@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicI
         mPicAdapter = new PicAdapter(this);
         mPicListRV.setAdapter(mPicAdapter);
 
+
+
         doPicSearch();
 
 
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicI
             super.onPostExecute(s);
             if (s != null) {
                 PicList searchResultsList = PicOfDayUtils.parsePicSearchResults(s);
-                System.out.println(searchResultsList);
+                System.out.println(searchResultsList.title);
                 mPicAdapter.updatePicData(searchResultsList);
             }
             else {

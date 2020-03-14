@@ -24,7 +24,7 @@ public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicItemViewHolde
 
     public void updatePicData(PicList picData) {
         mPic = picData;
-
+        mPicData.add(mPic);
         notifyDataSetChanged();
     }
 
