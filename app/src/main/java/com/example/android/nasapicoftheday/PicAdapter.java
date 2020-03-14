@@ -23,6 +23,10 @@ public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicItemViewHolde
     private PicList mPic;
     private OnPicItemClickListener mOnPicItemClickListener;
 
+    interface OnPicItemClickListener {
+        void onPicItemClick(PicList pic);
+    }
+
     public PicAdapter (OnPicItemClickListener onPicItemClickListener) {
         mOnPicItemClickListener = onPicItemClickListener;
     }
@@ -54,9 +58,6 @@ public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicItemViewHolde
         holder.bind(mPicData.get(position));
     }
 
-    public interface OnPicItemClickListener {
-        void onPicItemClick(PicList forecast);
-    }
 
     class PicItemViewHolder extends RecyclerView.ViewHolder {
         private TextView mPicTextView;
@@ -69,13 +70,14 @@ public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicItemViewHolde
             mImageView = itemView.findViewById(R.id.imageview);
 
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    String detailedForecast = mDetailedForecastData.get(getAdapterPosition());
-//                    mOnForecastItemClickListener.onForecastItemClick(mForecastData.get(getAdapterPosition()));
-//                }
-//            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnPicItemClickListener.onPicItemClick(
+                            mPicData.get(getAdapterPosition())
+                    );
+                }
+            });
         }
 
         public void bind(PicList pic) {
