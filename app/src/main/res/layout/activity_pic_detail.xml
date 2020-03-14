@@ -7,6 +7,14 @@
     android:orientation="vertical"
     tools:context=".PicDetailActivity">
 
+    <Button
+        android:id="@+id/downloadBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Download Image"
+        style="@style/Widget.AppCompat.Button.Colored"/>
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
