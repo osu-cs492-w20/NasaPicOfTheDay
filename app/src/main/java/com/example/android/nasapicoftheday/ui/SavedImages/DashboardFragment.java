@@ -1,4 +1,4 @@
-package com.example.android.nasapicoftheday.ui.dashboard;
+package com.example.android.nasapicoftheday.ui.SavedImages;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
