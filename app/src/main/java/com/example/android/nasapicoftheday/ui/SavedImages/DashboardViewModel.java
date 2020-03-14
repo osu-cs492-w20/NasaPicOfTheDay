@@ -1,4 +1,4 @@
-package com.example.android.nasapicoftheday.ui.dashboard;
+package com.example.android.nasapicoftheday.ui.SavedImages;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
