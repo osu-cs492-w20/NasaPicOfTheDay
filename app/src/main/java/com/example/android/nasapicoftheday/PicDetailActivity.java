@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
 import com.example.android.nasapicoftheday.utils.PicList;
@@ -24,6 +25,8 @@ public class PicDetailActivity extends AppCompatActivity {
 
             TextView picDescriptionTV = findViewById(R.id.tv_pic_description);
             picDescriptionTV.setText(mPic.explanation);
+            picDescriptionTV.setMovementMethod(new ScrollingMovementMethod());
+
         }
 
     }
