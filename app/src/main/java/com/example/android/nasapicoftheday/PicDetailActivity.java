@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.nasapicoftheday.utils.PicList;
+import com.squareup.picasso.Picasso;
 
 public class PicDetailActivity extends AppCompatActivity {
     public static final String EXTRA_PIC_ACTIVITY = "PicDetail";
@@ -27,6 +29,18 @@ public class PicDetailActivity extends AppCompatActivity {
             TextView picDescriptionTV = findViewById(R.id.tv_pic_description);
             picDescriptionTV.setText(mPic.explanation);
             picDescriptionTV.setMovementMethod(new ScrollingMovementMethod());
+
+            TextView pictitleTV = findViewById(R.id.tv_title_detail);
+            pictitleTV.setText(mPic.title);
+            pictitleTV.setMovementMethod(new ScrollingMovementMethod());
+
+            TextView picdateTV = findViewById(R.id.tv_date_detail);
+            picdateTV.setText(mPic.date);
+            picdateTV.setMovementMethod(new ScrollingMovementMethod());
+
+            ImageView image = findViewById(R.id.detail_image);
+            Picasso.get().load(mPic.url).into(image);
+
 
         }
 
