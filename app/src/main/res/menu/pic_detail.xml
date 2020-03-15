@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/action_share"
-        android:icon="@drawable/ic_action_view_on_web"
+        android:icon="@drawable/ic_view_image_online_foreground"
         android:title="@string/action_view_pic_on_web"
         app:showAsAction="ifRoom" />
 
