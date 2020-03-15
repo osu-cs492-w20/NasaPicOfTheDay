@@ -14,6 +14,8 @@ import com.example.android.nasapicoftheday.utils.PicOfDayUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicI
     private PicAdapter mPicAdapter;
     private String date;
     public static final String DATE_FORMAT_3 = "yyyy-MM-dd";
+    private PicViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +61,16 @@ public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicI
         mPicAdapter = new PicAdapter(this);
         mPicListRV.setAdapter(mPicAdapter);
 
-        String date = getCurrentDate();
+        mViewModel = new ViewModelProvider(this).get(PicViewModel.class);
+        mViewModel.getSearchResults().observe(this, new Observer<PicList>() {
+            @Override
+            public void onChanged(PicList pic) {
+                mPicAdapter.updatePicData(pic);
+            }
+        });
 
-        // get pictures and display them
-        int num_pictures = 7;
-        for (int i=0; i < num_pictures; i++){
-            date = getpreviousDate(date);
-            doPicSearch(date);
-        }
+        doPicSearch();
+
 
     }
 
@@ -163,9 +168,14 @@ public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicI
 
     }
 
-    public void doPicSearch(String date) {
-        String url = PicOfDayUtils.buildPicSearchURL(date);
-        new PicSearchTask().execute(url);
+    public void doPicSearch() {
+        String date = getCurrentDate();
+        // get pictures and display them
+        int num_pictures = 7;
+        for (int i=0; i < num_pictures; i++){
+            mViewModel.loadSearchResults(date);
+            date = getpreviousDate(date);
+        }
     }
 
     @Override

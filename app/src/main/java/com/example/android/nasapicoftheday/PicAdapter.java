@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicItemViewHolder> {
 
-    //    private ArrayList<String> mForecastData;
     private ArrayList<PicList> mPicData = new ArrayList<PicList>();
     private PicList mPic;
     private OnPicItemClickListener mOnPicItemClickListener;
@@ -34,9 +33,11 @@ public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicItemViewHolde
     }
 
     public void updatePicData(PicList picData) {
-        mPic = picData;
-        mPicData.add(mPic);
-        notifyDataSetChanged();
+        if (picData != null) {
+            mPic = picData;
+            mPicData.add(mPic);
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -86,9 +87,11 @@ public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicItemViewHolde
         }
 
         public void bind(PicList pic) {
-            mPicTextView.setText("Title: " + pic.title);
-            mDate.setText("Date: " + pic.date);
-            Picasso.get().load(pic.url).into(mImageView);
+            if (pic != null) {
+                mPicTextView.setText("Title: " + pic.title);
+                mDate.setText("Date: " + pic.date);
+                Picasso.get().load(pic.url).into(mImageView);
+            }
         }
     }
 }
