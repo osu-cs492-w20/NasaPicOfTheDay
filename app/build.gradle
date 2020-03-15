@@ -26,7 +26,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.squareup.picasso:picasso:2.71828'
-
+    implementation 'com.github.d-max:spots-dialog:0.7@aar'
 
     implementation 'com.squareup.okhttp3:okhttp:4.3.1'
     implementation 'com.google.code.gson:gson:2.8.6'
