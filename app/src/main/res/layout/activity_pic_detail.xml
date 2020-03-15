@@ -8,13 +8,6 @@
     tools:context=".PicDetailActivity"
     android:background="@color/black">
 
-    <Button
-        android:id="@+id/downloadBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Download Image"
-        style="@style/Widget.AppCompat.Button.Colored"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,6 +18,7 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:src="@drawable/ic_add_black_24dp" />
+
     </LinearLayout>
 
 
@@ -60,6 +54,15 @@ dp    <TextView
     <ImageView
         android:id="@+id/detail_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="188dp" />
+
+    <Button
+        android:id="@+id/downloadBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="5dp"
+        android:text="Download Image" />
 
 </LinearLayout>
+
