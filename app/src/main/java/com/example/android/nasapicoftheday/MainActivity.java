@@ -58,33 +58,12 @@ public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicI
 
         String date = getCurrentDate();
 
-        doPicSearch(date);
-        date = getpreviousDate(date);
-        doPicSearch(date);
-        date = getpreviousDate(date);
-        doPicSearch(date);
-        date = getpreviousDate(date);
-        doPicSearch(date);
-        date = getpreviousDate(date);
-        doPicSearch(date);
-        date = getpreviousDate(date);
-        doPicSearch(date);
-        date = getpreviousDate(date);
-        doPicSearch(date);
-        date = getpreviousDate(date);
-        doPicSearch(date);
-        date = getpreviousDate(date);
-
-
-
-        
-
-
-
-
-
-
-
+        // get pictures and display them
+        int num_pictures = 7;
+        for (int i=0; i < num_pictures; i++){
+            date = getpreviousDate(date);
+            doPicSearch(date);
+        }
 
     }
 
