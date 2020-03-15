@@ -34,35 +34,15 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.UUID;
+
+import dmax.dialog.SpotsDialog;
 
 public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicItemClickListener {
 
     private RecyclerView mPicListRV;
     private PicAdapter mPicAdapter;
-    ImageView myImageDownload;
 
-    private static final int PERMISSION_REQUEST_CODE = 1000;
-
-    Button downloadBtn;
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_REQUEST_CODE:
-            {
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-                }
-            }
-                break;
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,30 +57,12 @@ public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicI
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{}, PERMISSION_REQUEST_CODE);
-        }
-
         //recyclerView setup
         mPicListRV = findViewById(R.id.rv_pic_list);
         mPicListRV.setLayoutManager(new LinearLayoutManager(this));
         mPicAdapter = new PicAdapter(this);
         mPicListRV.setAdapter(mPicAdapter);
 
-        downloadBtn = (Button)findViewById(R.id.downloadBtn);
-        downloadBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(MainActivity.this, "you should grant permission", Toast.LENGTH_SHORT).show();
-                    requestPermissions(new String[]{}, PERMISSION_REQUEST_CODE);
-                    return;
-                }
-                else {
-
-                }
-            }
-        });
         doPicSearch();
 
     }
