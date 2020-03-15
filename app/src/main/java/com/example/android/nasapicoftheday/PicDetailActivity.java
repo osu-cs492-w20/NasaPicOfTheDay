@@ -2,18 +2,28 @@ package com.example.android.nasapicoftheday;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,9 +31,13 @@ import android.widget.Toast;
 import com.example.android.nasapicoftheday.utils.PicList;
 import com.squareup.picasso.Picasso;
 
+
 import java.util.UUID;
 
 import dmax.dialog.SpotsDialog;
+
+import java.util.List;
+
 
 public class PicDetailActivity extends AppCompatActivity {
     public static final String EXTRA_PIC_ACTIVITY = "PicDetail";
@@ -116,6 +130,32 @@ public class PicDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void viewImageOnWeb() {
+        if(mPic != null) {
+            Uri picUri = Uri.parse(mPic.hdurl);
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, picUri);
+            PackageManager pm = getPackageManager();
+
+            //pass a flag saying we don't want any false matches
+            List<ResolveInfo> activities = pm.queryIntentActivities(webIntent, PackageManager.MATCH_DEFAULT_ONLY);
+
+            if(activities.size() > 0) {
+                startActivity(webIntent);
+            }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_share:
+                viewImageOnWeb();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
