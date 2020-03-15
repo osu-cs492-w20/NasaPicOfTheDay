@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.example.android.nasapicoftheday.utils.PicList;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicItemViewHolder> {
@@ -22,6 +24,10 @@ public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicItemViewHolde
     private ArrayList<PicList> mPicData = new ArrayList<PicList>();
     private PicList mPic;
     private OnPicItemClickListener mOnPicItemClickListener;
+
+    interface OnPicItemClickListener {
+        void onPicItemClick(PicList pic);
+    }
 
     public PicAdapter (OnPicItemClickListener onPicItemClickListener) {
         mOnPicItemClickListener = onPicItemClickListener;
@@ -54,32 +60,34 @@ public class PicAdapter extends RecyclerView.Adapter<PicAdapter.PicItemViewHolde
         holder.bind(mPicData.get(position));
     }
 
-    public interface OnPicItemClickListener {
-        void onPicItemClick(PicList forecast);
-    }
 
     class PicItemViewHolder extends RecyclerView.ViewHolder {
         private TextView mPicTextView;
         private ImageView mImageView;
+        private TextView mDate;
 
 
         public PicItemViewHolder(@NonNull View itemView) {
             super(itemView);
             mPicTextView = itemView.findViewById(R.id.tv_title_text);
             mImageView = itemView.findViewById(R.id.imageview);
+            mDate = itemView.findViewById(R.id.tv_date_text);
 
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    String detailedForecast = mDetailedForecastData.get(getAdapterPosition());
-//                    mOnForecastItemClickListener.onForecastItemClick(mForecastData.get(getAdapterPosition()));
-//                }
-//            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnPicItemClickListener.onPicItemClick(
+                            mPicData.get(getAdapterPosition())
+                    );
+                }
+            });
         }
 
         public void bind(PicList pic) {
-            mPicTextView.setText(pic.title);
+            mPicTextView.setText("Title: " + pic.title);
+            mDate.setText("Date: " + pic.date);
             Picasso.get().load(pic.url).into(mImageView);
         }
     }

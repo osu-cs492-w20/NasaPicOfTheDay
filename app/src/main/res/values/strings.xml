@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">NASAPicOfTheDay</string>
-    <string name="title_home">Home</string>
+    <string name="title_home">NASA Pics of The Day</string>
     <string name="title_saved">Saved Images</string>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <string name="action_view_pic_on_web">View picture on web</string>
+
 </resources>
