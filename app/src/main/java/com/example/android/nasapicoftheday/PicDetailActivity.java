@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -23,12 +24,14 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.nasapicoftheday.utils.PicList;
+import com.example.android.nasapicoftheday.utils.SavedPicsViewModel;
 import com.squareup.picasso.Picasso;
 
 
@@ -42,6 +45,11 @@ import java.util.List;
 public class PicDetailActivity extends AppCompatActivity {
     public static final String EXTRA_PIC_ACTIVITY = "PicDetail";
     private PicList mPic;
+    private boolean mIsSaved = false;
+
+
+    private SavedPicsViewModel mViewModel;
+
 
     ImageView myImageDownload;
 
@@ -72,6 +80,11 @@ public class PicDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pic_detail);
 
+        mViewModel = new ViewModelProvider(
+                this,
+                new ViewModelProvider.AndroidViewModelFactory(getApplication())
+        ).get(SavedPicsViewModel.class);
+
         Intent intent = getIntent();
         if(intent != null && intent.hasExtra(EXTRA_PIC_ACTIVITY)) {
             //launch with new intent and grab the repo
@@ -94,6 +107,30 @@ public class PicDetailActivity extends AppCompatActivity {
 
 
         }
+
+        final ImageView picSavedIcon = findViewById(R.id.iv_repo_bookmark);
+        picSavedIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPic != null) {
+                    mIsSaved = !mIsSaved;
+                    if (mIsSaved) {
+                        mViewModel.insertSavedPic(mPic);
+                        picSavedIcon.setImageResource(
+                                R.drawable.ic_add_circle_black_24dp
+                        );
+                    } else {
+                        mViewModel.deleteSavedPic(mPic);
+                        picSavedIcon.setImageResource(
+                                R.drawable.ic_add_circle_outline_black_24dp
+                        );
+                    }
+                }
+
+            }
+        });
+
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{

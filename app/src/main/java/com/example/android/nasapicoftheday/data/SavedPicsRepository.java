@@ -3,9 +3,12 @@ package com.example.android.nasapicoftheday.data;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Delete;
 
 import com.example.android.nasapicoftheday.utils.PicList;
+
+import java.util.List;
 
 public class SavedPicsRepository {
     private SavedPicsDao mSavedPicsDao;
@@ -20,6 +23,11 @@ public class SavedPicsRepository {
     }
 
     public void deleteSavedRepo(PicList pic) { new DeletePicAsyncTask(mSavedPicsDao).execute(pic); }
+
+    public LiveData<List<PicList>> getAllPics() {
+        return mSavedPicsDao.getAllPics();
+    }
+
 
     private static class InsertPicAsyncTask extends AsyncTask<PicList, Void, Void> {
         private SavedPicsDao mAsyncTaskDao;
