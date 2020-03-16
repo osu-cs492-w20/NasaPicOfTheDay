@@ -6,5 +6,6 @@
     <color name="white">#FFFFFF</color>
 
     <string name="action_view_pic_on_web">View picture on web</string>
+    <string name="action_view_saved">View Saved Images</string>
 
 </resources>

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.android.nasapicoftheday.utils.NetworkUtils;
@@ -12,6 +14,8 @@ import com.example.android.nasapicoftheday.utils.PicOfDayUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -35,20 +39,21 @@ public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicI
     private PicAdapter mPicAdapter;
     private String date;
     public static final String DATE_FORMAT_3 = "yyyy-MM-dd";
+    private PicViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+//        BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
+//        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+//                R.id.navigation_home, R.id.navigation_dashboard)
+//                .build();
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//        NavigationUI.setupWithNavController(navView, navController);
 
         //recyclerView setup
         mPicListRV = findViewById(R.id.rv_pic_list);
@@ -56,15 +61,40 @@ public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicI
         mPicAdapter = new PicAdapter(this);
         mPicListRV.setAdapter(mPicAdapter);
 
-        String date = getCurrentDate();
+        mViewModel = new ViewModelProvider(this).get(PicViewModel.class);
+        mViewModel.getSearchResults().observe(this, new Observer<PicList>() {
+            @Override
+            public void onChanged(PicList pic) {
+                mPicAdapter.updatePicData(pic);
+            }
+        });
 
-        // get pictures and display them
-        int num_pictures = 7;
-        for (int i=0; i < num_pictures; i++){
-            date = getpreviousDate(date);
-            doPicSearch(date);
+        doPicSearch();
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_view_saved:
+                showSavedImages();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+    }
 
+    public void showSavedImages(){
+        // load new intent
+        Intent savedPicIntent = new Intent(this, SavedPicsActivity.class);
+        startActivity(savedPicIntent);
     }
 
     public String getpreviousDate (String date) {
@@ -138,9 +168,14 @@ public class MainActivity extends AppCompatActivity implements PicAdapter.OnPicI
 
     }
 
-    public void doPicSearch(String date) {
-        String url = PicOfDayUtils.buildPicSearchURL(date);
-        new PicSearchTask().execute(url);
+    public void doPicSearch() {
+        String date = getCurrentDate();
+        // get pictures and display them
+        int num_pictures = 7;
+        for (int i=0; i < num_pictures; i++){
+            mViewModel.loadSearchResults(date);
+            date = getpreviousDate(date);
+        }
     }
 
     @Override
