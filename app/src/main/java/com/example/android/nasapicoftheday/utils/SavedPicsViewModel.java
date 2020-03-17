@@ -25,6 +25,10 @@ public class SavedPicsViewModel extends AndroidViewModel {
         return mSavedPicsRepository.getAllPics();
     }
 
+    public LiveData<PicList> getPicByTitle(String title) {
+        return mSavedPicsRepository.getPicByTitle(title);
+    }
+
 
 
 }
