@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.core.app.ActivityCompat;
 
@@ -108,25 +109,52 @@ public class PicDetailActivity extends AppCompatActivity {
 
         }
 
+//        final ImageView picSavedIcon = findViewById(R.id.iv_repo_bookmark);
+//        picSavedIcon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mPic != null) {
+//                    mIsSaved = !mIsSaved;
+//                    if (mIsSaved) {
+//                        mViewModel.insertSavedPic(mPic);
+//                        picSavedIcon.setImageResource(
+//                                R.drawable.ic_add_circle_black_24dp
+//                        );
+//                    } else {
+//                        mViewModel.deleteSavedPic(mPic);
+//                        picSavedIcon.setImageResource(
+//                                R.drawable.ic_add_circle_outline_black_24dp
+//                        );
+//                    }
+//                }
+//
+//            }
+//        });
+
         final ImageView picSavedIcon = findViewById(R.id.iv_repo_bookmark);
         picSavedIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mPic != null) {
-                    mIsSaved = !mIsSaved;
-                    if (mIsSaved) {
+                    if (!mIsSaved) {
                         mViewModel.insertSavedPic(mPic);
-                        picSavedIcon.setImageResource(
-                                R.drawable.ic_add_circle_black_24dp
-                        );
                     } else {
                         mViewModel.deleteSavedPic(mPic);
-                        picSavedIcon.setImageResource(
-                                R.drawable.ic_add_circle_outline_black_24dp
-                        );
                     }
                 }
+            }
+        });
 
+        mViewModel.getPicByTitle(mPic.title).observe(this, new Observer<PicList>() {
+            @Override
+            public void onChanged(PicList pic) {
+                if (pic != null) {
+                    mIsSaved = true;
+                    picSavedIcon.setImageResource(R.drawable.ic_add_circle_black_24dp);
+                } else {
+                    mIsSaved = false;
+                    picSavedIcon.setImageResource(R.drawable.ic_add_circle_outline_black_24dp);
+                }
             }
         });
 

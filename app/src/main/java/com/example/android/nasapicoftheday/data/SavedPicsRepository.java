@@ -28,6 +28,8 @@ public class SavedPicsRepository {
         return mSavedPicsDao.getAllPics();
     }
 
+    public LiveData<PicList> getPicByTitle(String title) { return mSavedPicsDao.getPicByTitle(title); }
+
 
     private static class InsertPicAsyncTask extends AsyncTask<PicList, Void, Void> {
         private SavedPicsDao mAsyncTaskDao;
